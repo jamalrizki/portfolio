@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import Directory from './DirectoryComponent';
-import CampsiteInfo from './CampsiteInfoComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import Contact from './ContactComponent';
 import Photo from './PhotoComponent';
 import CarouselComponent from './HomeComponent';
-import Example from './GalleryComponent';
+import Bnw from './BlackandWhiteComponent';
+import About from './AboutComponent1';
+import Card from './Gallery2component';
+import Nature from './NatureComponent';
+import Arch from './ArchComponent';
+import Sculpture from './SculComponent';
+import App from './ContactComponent1';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { CAMPSITES } from '../shared/campsites';
-import { COMMENTS } from '../shared/comments';
-import { PARTNERS } from '../shared/partners';
-import { PROMOTIONS } from '../shared/promotions';
+import { CARDS } from '../shared/cards';
+import { ABOUTS } from '../shared/about';
+import { CAROUSEL } from '../shared/carousel';
+
 
 
 
@@ -19,27 +22,16 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            campsites: CAMPSITES,
-            comments: COMMENTS,
-            partners: PARTNERS,
-            promotions: PROMOTIONS,
+            carousel: CAROUSEL,
+            cards: CARDS,
+            abouts: ABOUTS,
+            
            
         };
     }
 
 
     render() {
-
-        
-
-        const CampsiteWithId = ({match}) => {
-            return (
-                <CampsiteInfo 
-                    campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-                    comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
-                />
-            );
-        }; 
 
     
 
@@ -48,12 +40,15 @@ class Main extends Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/home' component={CarouselComponent} />
-                    <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
-                    <Route path='/directory/:campsiteId' component={CampsiteWithId} />
-                    <Route exact path='/gallery' component={Example} />
-                    <Route exact path='/contactus' component={Contact} />
+                    <Route exact path='/home' render={() => <CarouselComponent cards={this.state.carousel} />}  />
+                    <Route exact path='/gallery2' render={() => <Card cards={this.state.cards} />} />
+                    <Route exact path='/contactus' component={App} />
                     <Route exact path='/photos' component={Photo} />
+                    <Route exact path='/about1' render={() => <About abouts={this.state.abouts} />}  />
+                    <Route exact path='/blackandwhite' component={Bnw} />
+                    <Route exact path='/nature' component={Nature} />
+                    <Route exact path='/arch' component={Arch} />
+                    <Route exact path='/sculpture' component={Sculpture} />
                     <Redirect to='/home' />
                 </Switch>
                 <Footer />
